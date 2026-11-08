@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnTest Probe | ネットワーク疎通・経路追跡テストツール</title>
+  <meta name="description" content="現場の通信確認とエビデンス保全をスマートに。並列Ping、期待値比較対応Traceroute、自動ログ保存を備えたネットワークテストツール「ConnTest Probe」。">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Announcement Bar (Beta Notice) -->
+  <div class="beta-banner">
+    <div class="container banner-inner">
+      <span class="badge">BETA</span>
+      <span class="banner-text">現在 <strong>ConnTest Probe はベータ版</strong> として提供中です。機能へのご要望・不具合報告は <a href="https://forms.gle/QWfpTU3k4R7ozjVk9" target="_blank" rel="noopener noreferrer" class="banner-link">フィードバックフォーム</a> よりお寄せください。</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <img src="logo.svg" alt="ConnTest Probe Logo" class="brand-logo" width="36" height="33">
+        <span class="brand-name">ConnTest Probe</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">機能一覧</a>
+        <a href="#plans">エディション</a>
+        <a href="manual.html" target="_blank" rel="noopener noreferrer">マニュアル</a>
+        <a href="https://forms.gle/QWfpTU3k4R7ozjVk9" target="_blank" rel="noopener noreferrer" class="nav-contact">お問い合わせ</a>
+        <a href="#download" class="btn btn-sm btn-primary">ダウンロード（β版）</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">Windows 11 専用</div>
+        <h1 class="hero-title">ネットワーク疎通確認と<br>エビデンス保全を、これひとつで。</h1>
+        <p class="hero-subtitle">
+          ConnTest Probe（コンテストプローブ）は、切り替え工事や現地トラブルシュートにおける通信試験を効率化するネットワークエンジニア向けテストツールです。
+          並列Ping、自動Traceroute、そして取り忘れを防ぐ詳細エビデンスの自動保存に対応。
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-primary btn-lg">β版を試す（無料）</a>
+          <a href="#features" class="btn btn-secondary btn-lg">主要機能を見る</a>
+        </div>
+      </div>
+      <div class="hero-preview">
+        <div class="app-window-frame">
+          <div class="window-header">
+            <span class="window-dot red"></span>
+            <span class="window-dot yellow"></span>
+            <span class="window-dot green"></span>
+            <span class="window-title">ConnTest Probe - 疎通テスト実行画面</span>
+          </div>
+          <div class="window-body">
+            <div class="preview-metric-row">
+              <div class="preview-stat">
+                <span class="stat-label">STATUS</span>
+                <span class="stat-value active">RUNNING</span>
+              </div>
+              <div class="preview-stat">
+                <span class="stat-label">PARALLEL TARGETS</span>
+                <span class="stat-value">16 Hosts</span>
+              </div>
+              <div class="preview-stat">
+                <span class="stat-label">LOSS RATE</span>
+                <span class="stat-value">0.00%</span>
+              </div>
+            </div>
+            <div class="preview-table">
+              <div class="table-row header">
+                <span>ホスト名 / IP</span>
+                <span>Ping</span>
+                <span>RTT (avg)</span>
+                <span>Traceroute</span>
+                <span>判定</span>
+              </div>
+              <div class="table-row">
+                <span class="mono">192.168.10.1 (GW)</span>
+                <span class="status-ok">● 応答あり</span>
+                <span class="mono">1.2 ms</span>
+                <span class="mono">1 hop</span>
+                <span class="tag-success">一致</span>
+              </div>
+              <div class="table-row alert-row">
+                <span class="mono">10.200.4.15 (Core-SW)</span>
+                <span class="status-warn">▲ 経路変更検知</span>
+                <span class="mono">14.8 ms</span>
+                <span class="mono">4 hops (自動実行)</span>
+                <span class="tag-warning">差分あり</span>
+              </div>
+              <div class="table-row">
+                <span class="mono">172.16.0.8 (DNS-01)</span>
+                <span class="status-ok">● 応答あり</span>
+                <span class="mono">4.1 ms</span>
+                <span class="mono">2 hops</span>
+                <span class="tag-success">一致</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features Section -->
+  <section id="features" class="section features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">現場の「困った」を解消する主な機能</h2>
+        <p class="section-desc">シンプルで無駄のない画面設計で、日々の運用テストから夜間切り替え作業まで確実にサポートします。</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1: 並列Ping -->
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">並列 Ping 実行</h3>
+          </div>
+          <p class="feature-desc">
+            複数拠点や複数機器のIPリストに対し、同時に並列Pingを実行。全対象の疎通ステータスやRTTの揺らぎを一目で素早く把握できます。
+          </p>
+          <div class="feature-diagram">
+            <div class="diagram-ping-box">
+              <div class="diagram-source">
+                <span class="diagram-device-icon">💻</span>
+                <span class="diagram-device-name">Probe</span>
+              </div>
+              <div class="diagram-flow-lines">
+                <div class="diagram-beam beam-ok">
+                  <span class="beam-line"></span>
+                  <span class="beam-target">Host A (192.168.1.1)</span>
+                  <span class="beam-status">OK (1ms)</span>
+                </div>
+                <div class="diagram-beam beam-ok">
+                  <span class="beam-line"></span>
+                  <span class="beam-target">Host B (10.0.0.254)</span>
+                  <span class="beam-status">OK (3ms)</span>
+                </div>
+                <div class="diagram-beam beam-warn">
+                  <span class="beam-line"></span>
+                  <span class="beam-target">Host C (172.16.2.1)</span>
+                  <span class="beam-status">NG / Timeout</span>
+                </div>
+              </div>
+            </div>
+            <div class="diagram-caption">1つの画面から全ホストへ同時パケット送出・即時可視化</div>
+          </div>
+        </div>
+
+        <!-- Feature 2: Traceroute 期待値比較 -->
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon">🧭</div>
+            <h3 class="feature-title">Traceroute（期待値比較）</h3>
+          </div>
+          <p class="feature-desc">
+            事前に定義したホップごとの「期待経路」と実際の経路を自動比較。通常時と異なる経路を通っている場合にハイライト表示します。
+          </p>
+          <div class="feature-diagram">
+            <div class="diagram-compare-box">
+              <div class="compare-row expected">
+                <span class="compare-badge">期待値</span>
+                <div class="hops-flow">
+                  <span class="hop-chip">GW</span>
+                  <span class="hop-arrow">→</span>
+                  <span class="hop-chip">Core-A</span>
+                  <span class="hop-arrow">→</span>
+                  <span class="hop-chip">Dest</span>
+                </div>
+              </div>
+              <div class="compare-divider">VS</div>
+              <div class="compare-row actual-diff">
+                <span class="compare-badge match-ng">実際値</span>
+                <div class="hops-flow">
+                  <span class="hop-chip">GW</span>
+                  <span class="hop-arrow">→</span>
+                  <span class="hop-chip diff-alert">Core-B（迂回）</span>
+                  <span class="hop-arrow">→</span>
+                  <span class="hop-chip">Dest</span>
+                </div>
+              </div>
+            </div>
+            <div class="diagram-caption">設計経路（正本）との差分をホップ単位で自動検知</div>
+          </div>
+        </div>
+
+        <!-- Feature 3: Pingダウン時 自動Traceroute -->
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon">🔄</div>
+            <h3 class="feature-title">Pingダウン時の自動 Traceroute</h3>
+          </div>
+          <p class="feature-desc">
+            Ping通信断をトリガーに、自動でTracerouteを実行します。ネットワーク切り替わり後の経路変化を記録します。
+          </p>
+          <div class="feature-diagram">
+            <div class="diagram-trigger-box">
+              <div class="trigger-step ping-down">
+                <span class="trigger-step-badge">1. Ping監視</span>
+                <span class="trigger-text">通信断検知（Loss 100%）</span>
+              </div>
+              <div class="trigger-arrow">⚡ 自動トリガー</div>
+              <div class="trigger-step trace-run">
+                <span class="trigger-step-badge">2. Traceroute起動</span>
+                <span class="trigger-text">新経路のホップ・停止位置を追跡</span>
+              </div>
+            </div>
+            <div class="diagram-caption">切り替わり瞬間・途絶箇所の証跡を逃さずキャッチ</div>
+          </div>
+        </div>
+
+        <!-- Feature 4: テスト終了時の自動保存 -->
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon">💾</div>
+            <h3 class="feature-title">テスト終了時の自動保存</h3>
+          </div>
+          <p class="feature-desc">
+            試験停止と連動してログ・エビデンスファイルを即座にローカルへ自動保存。「結果を保存し忘れた」という現場のヒューマンエラーを防止します。
+          </p>
+          <div class="feature-diagram">
+            <div class="diagram-save-box">
+              <div class="save-step-stop">
+                <span class="btn-mock-stop">■ 停止ボタン押下</span>
+              </div>
+              <div class="save-connector">自動連動</div>
+              <div class="save-files-output">
+                <div class="file-item">📁 results/conntest-202701.csv</div>
+                <div class="file-item">📦 results/evidence-bundle.zip</div>
+              </div>
+            </div>
+            <div class="diagram-caption">停止操作のみでタイムスタンプ付きフォルダに確実保存</div>
+          </div>
+        </div>
+
+        <!-- Feature 5: 詳細なエビデンス -->
+        <div class="feature-card wide">
+          <div class="feature-card-header">
+            <div class="feature-icon">📋</div>
+            <h3 class="feature-title">詳細なエビデンス出力</h3>
+          </div>
+          <p class="feature-desc">
+            開始終了時刻、各送信パケットの統計、タイムスタンプ付きのPing・Traceroute実行履歴など、報告書作成や顧客提出にそのまま活用できる高品質なエビデンス（CSV / ZIP）を生成します。
+          </p>
+          <div class="feature-diagram">
+            <div class="diagram-evidence-grid">
+              <div class="evidence-pill">
+                <span class="pill-title">⏱ タイムスタンプ</span>
+                <span class="pill-desc">ミリ秒単位の送受信時刻</span>
+              </div>
+              <div class="evidence-pill">
+                <span class="pill-title">📊 パケット統計</span>
+                <span class="pill-desc">送信数・応答数・ロス率・RTT</span>
+              </div>
+              <div class="evidence-pill">
+                <span class="pill-title">🗺 ホップ別追跡ログ</span>
+                <span class="pill-desc">IP・ホスト名・各試行RTT・合否</span>
+              </div>
+              <div class="evidence-pill">
+                <span class="pill-title">📦 一括アーカイブ</span>
+                <span class="pill-desc">CSV生データ＋Zip形式で出力</span>
+              </div>
+            </div>
+            <div class="diagram-caption">作業報告書や検収エビデンスにそのまま添付できる客観データ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Edition / Pricing Plans Section -->
+  <section id="plans" class="section plans-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">提供予定のエディション</h2>
+        <p class="section-desc">
+          現在提供中のβ版はすべての機能を無料でお試しいただけます。<br>
+          β版期間終了後は、用途に合わせた「無償版（Free）」と「有償版（Pro）」の提供を予定しています。
+        </p>
+      </div>
+
+      <div class="plans-grid">
+        <!-- Beta Card -->
+        <div class="plan-card current">
+          <div class="plan-badge">現在提供中</div>
+          <h3 class="plan-name">β版（プレビュー）</h3>
+          <div class="plan-price">無料</div>
+          <p class="plan-summary">全機能を制限なくお試しいただけます。</p>
+          <ul class="plan-features">
+            <li>✓ 並列Ping機能</li>
+            <li>✓ Traceroute ＆ 期待値比較</li>
+            <li>✓ Pingダウン時の自動Traceroute</li>
+            <li>✓ 試験終了時の自動エビデンス保存</li>
+            <li>✓ 詳細ログ出力（CSV/ZIP）</li>
+          </ul>
+          <a href="#download" class="btn btn-primary full-width">今すぐ試す</a>
+        </div>
+
+        <!-- Future Plans Card -->
+        <div class="plan-card upcoming">
+          <div class="plan-badge subtle">β版終了後 予定</div>
+          <h3 class="plan-name">無償版 / 有償版</h3>
+          <div class="plan-price upcoming-text">準備中</div>
+          <p class="plan-summary">用途に応じた2つのプランを展開予定です。</p>
+          <div class="edition-breakdown">
+            <div class="edition-item">
+              <strong>無償版（Free）：</strong>
+              <span>日常の簡易疎通確認や基本Ping/Tracerouteを中心とした機能を提供予定。</span>
+            </div>
+            <div class="edition-item">
+              <strong>有償版（Pro / Enterprise）：</strong>
+              <span>高度な自動化、長期シナリオ、詳細エビデンス連携など一部の高度機能は有償版限定となる可能性があります。</span>
+            </div>
+          </div>
+          <p class="edition-note">※プラン構成や機能割り当てはβ版ご利用者のフィードバックをもとに正式決定いたします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download / CTA Section -->
+  <section id="download" class="section download-section">
+    <div class="container">
+      <div class="download-card">
+        <h2>ConnTest Probe β版を体験する</h2>
+        <p>ネットワーク構築後の検証や日々の運用にご活用ください。</p>
+        <div class="download-buttons">
+          <a href="#" class="btn btn-primary btn-lg">
+            <span>Windows 11 版をダウンロード</span>
+            <small class="btn-subtext">ConnTestProbe.exe / β版</small>
+          </a>
+        </div>
+        <p class="download-note">
+          ※本ツールは <strong>Windows 11</strong> に対応しています（macOS等の他OSには対応しておりません）。<br>
+          <span class="beta-period-note">※β版は2027年1月31日までご利用いただけます。</span>
+        </p>
+
+        <!-- Updates / Info Section -->
+        <div class="updates-box">
+          <div class="updates-header">
+            <span class="updates-badge">最新情報</span>
+            <span class="updates-title">アップデート情報・開発状況</span>
+          </div>
+          <p class="updates-desc">新機能の追加やバージョンアップのお知らせは、公式サイトおよび公式X（旧Twitter）アカウントにて随時発信しています。</p>
+          <div class="updates-links">
+            <a href="https://conntest.naitwo.me/" class="updates-link-card" target="_blank" rel="noopener noreferrer">
+              <span class="link-icon">🌐</span>
+              <div class="link-text">
+                <strong>公式サイト</strong>
+                <span class="mono">conntest.naitwo.me</span>
+              </div>
+            </a>
+            <a href="https://x.com/naitwo2" class="updates-link-card" target="_blank" rel="noopener noreferrer">
+              <span class="link-icon">𝕏</span>
+              <div class="link-text">
+                <strong>X アカウント</strong>
+                <span class="mono">@naitwo2</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Feedback & Contact Callout -->
+        <div class="feedback-box">
+          <div class="feedback-icon">💬</div>
+          <div class="feedback-content">
+            <h3>フィードバック・お問い合わせ</h3>
+            <p>機能追加のご要望、不具合の報告、導入に関するご質問など、皆さまの声をお待ちしております。</p>
+          </div>
+          <a href="https://forms.gle/QWfpTU3k4R7ozjVk9" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm feedback-btn">
+            フォームを開く ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logo.svg" alt="ConnTest Probe Logo" class="brand-logo" width="24" height="22">
+        <span>ConnTest Probe</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://conntest.naitwo.me/">公式サイト</a>
+        <a href="manual.html" target="_blank" rel="noopener noreferrer">マニュアル</a>
+        <a href="https://x.com/naitwo2" target="_blank" rel="noopener noreferrer">X (@naitwo2)</a>
+        <a href="https://forms.gle/QWfpTU3k4R7ozjVk9" target="_blank" rel="noopener noreferrer">フィードバック・お問い合わせ</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p class="analytics-notice">
+        当サイトでは利用状況の把握・利便性向上のためにアクセス解析ツールを使用しています。データは匿名で収集されており、個人を特定する情報は含まれません。
+      </p>
+      <p class="copyright">© 2026 ConnTest Probe Project. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

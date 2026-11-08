@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnTest Probe ユーザーマニュアル</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fff3e8;
+      --surface: #fffaf5;
+      --panel: #fffefd;
+      --panel-alt: #f8eadc;
+      --line: #dfc8b2;
+      --line-strong: #b99470;
+      --text: #2c261f;
+      --muted: #6d5d4d;
+      --primary: #f59e0b;
+      --primary-strong: #d98200;
+      --accent: #9a6500;
+      --accent-bg: #fff4df;
+      --success: #16a75f;
+      --success-bg: #f2fbf6;
+      --danger: #ca1f27;
+      --danger-bg: #fff1ef;
+      --warning: #91621e;
+      --warning-bg: #fff8e9;
+      --info: #087ca7;
+      --info-bg: #edf8fc;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* サイドバー */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--surface);
+      border-right: 1px solid var(--line);
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      padding: 20px 14px;
+      z-index: 100;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+
+    .brand-logo-svg {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+    }
+    .brand-title .brand-accent {
+      color: var(--primary);
+      margin: 0 1px;
+    }
+
+    .nav-list {
+      list-style: none;
+    }
+
+    .nav-item {
+      margin-bottom: 3px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 7px 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .nav-link:hover {
+      background: var(--panel-alt);
+      border-color: var(--line);
+      color: var(--accent);
+    }
+
+    .nav-link.active {
+      background: var(--accent-bg);
+      border-color: var(--line-strong);
+      color: var(--accent);
+    }
+
+    /* メインコンテンツ */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 36px 56px;
+      max-width: 1160px;
+    }
+
+    header.doc-header {
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .doc-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 3px;
+      background: var(--accent-bg);
+      border: 1px solid var(--line-strong);
+      color: var(--accent);
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    h1.doc-title {
+      font-size: 2rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    p.doc-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+    }
+
+    section {
+      margin-bottom: 44px;
+      scroll-margin-top: 24px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--text);
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line-strong);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 22px 0 10px;
+      font-weight: 700;
+    }
+
+    p, ul, ol {
+      margin-bottom: 14px;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    /* コールアウト / メモ */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: var(--accent-bg);
+      border: 1px solid var(--line);
+      border-left-width: 4px;
+      border-left-color: var(--primary);
+      padding: 14px 18px;
+      border-radius: 0 4px 4px 0;
+      margin: 18px 0;
+      font-size: 0.92rem;
+    }
+
+    .callout.warning {
+      border-left-color: var(--warning);
+      background: var(--warning-bg);
+    }
+
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .callout.info {
+      border-left-color: var(--info);
+      background: var(--info-bg);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+    }
+
+    /* テーブル */
+    .table-container {
+      overflow-x: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      margin: 18px 0;
+      box-shadow: 0 2px 8px rgba(99, 67, 36, 0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: var(--panel-alt);
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--surface);
+    }
+
+    /* コードブロック */
+    pre {
+      background: #25201b;
+      color: #fdf6ec;
+      padding: 14px 18px;
+      border-radius: 4px;
+      border: 1px solid var(--line-strong);
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85rem;
+      margin: 14px 0;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: var(--panel-alt);
+      color: var(--accent);
+      padding: 2px 5px;
+      border-radius: 3px;
+      border: 1px solid var(--line);
+      font-size: 0.88em;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border: none;
+    }
+
+    /* バッジ */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .badge-ok { background: var(--success-bg); color: var(--success); border-color: rgba(22, 167, 95, 0.3); }
+    .badge-warn { background: var(--warning-bg); color: var(--warning); border-color: rgba(145, 98, 30, 0.3); }
+    .badge-err { background: var(--danger-bg); color: var(--danger); border-color: rgba(202, 31, 39, 0.3); }
+    .badge-neutral { background: var(--panel-alt); color: var(--text); border-color: var(--line); }
+
+    /* アプリUI風ボタン・コントロール */
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: #fffaf6;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .app-btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .app-btn.danger {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+
+    /* UIプレビューカード */
+    .ui-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      box-shadow: 0 4px 14px rgba(99, 67, 36, 0.06);
+    }
+
+    .ui-card-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+
+    /* フッター */
+    footer.doc-footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 24px;
+      }
+    }
+
+    @media print {
+      .sidebar { display: none; }
+      .main-content { margin: 0; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- サイドバーナビゲーション -->
+  <aside class="sidebar">
+    <div class="brand-header">
+      <!-- アプリ共通 SVG ロゴ -->
+      <svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 92" role="img" aria-label="ConnTest Probe Logo">
+        <defs>
+          <linearGradient id="p-loop-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#ea580c"/>
+          </linearGradient>
+          <linearGradient id="p-stem-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#292524"/>
+            <stop offset="100%" stop-color="#1c1917"/>
+          </linearGradient>
+          <mask id="p-counter-mask">
+            <rect x="0" y="0" width="100" height="92" fill="#fff"/>
+            <polygon points="55,12 67,12 70,15 70,20 67,23 55,23" fill="#000"/>
+          </mask>
+        </defs>
+        <g transform="translate(12, 6)">
+          <g transform="translate(-24, -1) scale(0.20)">
+            <polygon points="170,160 260,250 260,400 170,400" fill="#f59e0b"/>
+            <polygon points="170,160 170,400 120,400 120,240" fill="#d97706"/>
+            <polygon points="170,160 280,160 220,100" fill="#f59e0b"/>
+            <polygon points="280,160 340,160 270,200 220,160" fill="#d97706"/>
+            <polygon points="340,160 325,170 315,160" fill="#855300"/>
+            <polygon points="200,115 230,20 250,110" fill="#f59e0b"/>
+            <polygon points="230,20 250,110 260,60" fill="#855300"/>
+            <polygon points="170,130 185,50 210,110" fill="#d97706"/>
+            <polygon points="260,340 360,240 360,400 260,400" fill="#f59e0b"/>
+            <polygon points="360,240 360,310 320,310" fill="#855300"/>
+            <polygon points="360,240 400,200 400,310 360,310" fill="#855300"/>
+            <polygon points="210,320 260,320 260,400 180,400" fill="#b45309"/>
+          </g>
+          <g mask="url(#p-counter-mask)">
+            <polygon points="48,11 53,6 55,6 55,34 48,34" fill="url(#p-stem-gradient)"/>
+            <polygon points="55,6 70,6 76,12 76,23 70,29 55,29" fill="url(#p-loop-gradient)"/>
+            <polygon points="70,6 76,12 70,18 64,12" fill="#d97706"/>
+            <polygon points="70,29 76,23 70,17 64,23" fill="#b45309"/>
+          </g>
+        </g>
+      </svg>
+      <div class="brand-title">Conn<span class="brand-accent">Test</span> Probe</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#overview" class="nav-link">1. アプリケーション概要</a></li>
+      <li class="nav-item"><a href="#ui-layout" class="nav-link">2. 画面レイアウト・操作性</a></li>
+      <li class="nav-item"><a href="#scenario-spec" class="nav-link">3. テストシナリオCSV仕様</a></li>
+      <li class="nav-item"><a href="#hosts-catalog" class="nav-link">4. IPリスト (ホストカタログ)</a></li>
+      <li class="nav-item"><a href="#ping-monitoring" class="nav-link">5. Ping監視・通信断計測</a></li>
+      <li class="nav-item"><a href="#traceroute-history" class="nav-link">6. Traceroute・経路履歴比較</a></li>
+      <li class="nav-item"><a href="#auto-trace" class="nav-link">7. 自動Traceroute機能</a></li>
+      <li class="nav-item"><a href="#export-data" class="nav-link">8. 結果エクスポートとDB管理</a></li>
+      <li class="nav-item"><a href="#taskbar-residency" class="nav-link">9. タスクバー常駐・終了制御</a></li>
+      <li class="nav-item"><a href="#limits-troubleshooting" class="nav-link">10. 制限事項・仕様詳細</a></li>
+    </ul>
+  </aside>
+
+  <!-- メインコンテンツ -->
+  <main class="main-content">
+    <header class="doc-header">
+      <span class="doc-badge">Official Manual - prepare / html-manual</span>
+      <h1 class="doc-title">ConnTest Probe 利用・操作マニュアル</h1>
+      <p class="doc-subtitle">Windows 11 高精度ネットワーク疎通・経路監視プローブツールの機能と操作リファレンス</p>
+    </header>
+
+    <!-- 1. 概要 -->
+    <section id="overview">
+      <h2>1. アプリケーション概要</h2>
+      <p>
+        <strong>ConnTest Probe</strong> は、Windows 11専用の高精度ICMP Ping通信断監視およびTraceroute経路比較テストツールです（Windows 11のみ対応）。
+      </p>
+      <div class="callout">
+        <div class="callout-title">主な特徴</div>
+        <ul>
+          <li><strong>500ms単位の通信断精密計測</strong>: 1回の一時的なパケット欠落から長期断まで、ミリ秒精度（<code>00:00:00.500</code>など）でダウンタイムを即座に特定。</li>
+          <li><strong>Traceroute 3段履歴比較</strong>: 「期待値」「前回実行結果」「選択した実行時刻」を縦並び・ホップ横展開で比較し、経路変更箇所や応答変化をハイライト表示。</li>
+          <li><strong>障害連動の自動Traceroute</strong>: Pingの連続失敗時間を検知し、同一障害中に1回だけ自動でTracerouteを実行。</li>
+          <li><strong>タスクバー常駐対応</strong>: ウィンドウを閉じてもバックグラウンドでテストを継続。通知領域からいつでも復帰可能。</li>
+          <li><strong>SQLiteストリーミングZIP出力</strong>: 長時間の大量明細ログを軽量SQLiteに蓄積し、必要時にZIP・CSVとして一括エクスポート。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. UIレイアウト -->
+    <section id="ui-layout">
+      <h2>2. 画面レイアウト・操作性</h2>
+      <p>
+        多数のシナリオを監視する業務環境を考慮し、<strong>固定ヘッダー（Sticky Header）</strong>と温かみのあるアンバー調の配色を採用しています。
+      </p>
+
+      <div class="ui-card">
+        <div class="ui-card-title">画面構成</div>
+        <ul>
+          <li><strong>トップバー (App Header)</strong>:
+            <ul>
+              <li><strong>タブ切替</strong>: <span class="app-btn">テストシナリオ設定</span> と <span class="app-btn">実行結果</span> を切り替え。</li>
+              <li><strong>シナリオ操作</strong>: <span class="app-btn">取込</span> <span class="app-btn">保存</span> ボタン。</li>
+              <li><strong>実行制御</strong>: Ping・Tracerouteの <span class="app-btn primary">実行</span> / <span class="app-btn danger">停止</span>。</li>
+              <li><strong>結果エクスポート</strong>: 「自動保存」チェック、<span class="app-btn">CSV</span> <span class="app-btn">ZIP</span> エクスポートボタン。</li>
+            </ul>
+          </li>
+          <li><strong>固定ヘッダー付きテーブル</strong>: 画面をスクロールしても、表の見出し列（選択、ID、IP/FQDN等）が固定表示されるため、横スクロール・縦スクロール時も対象を迷わず把握できます。</li>
+          <li><strong>右下ステータス</strong>: β版利用期限情報（例: <code>β版 2027年1月31日まで利用可能</code>）および言語切替（日本語 / 英語）を表示。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. シナリオCSV仕様 -->
+    <section id="scenario-spec">
+      <h2>3. テストシナリオCSV仕様</h2>
+      <p>
+        テスト対象および実行パラメータはCSVで一括インポート・エクスポートできます。CSVはヘッダー付きの<strong>10列フォーマット</strong>です。
+      </p>
+
+      <pre><code>ip,source_ip,ping_payload_bytes,ping_timeout_ms,ping_interval_ms,max_hops,trace_timeout_ms,expected_route,memo,auto_trace
+127.0.0.1,,56,500,500,8,500,127.0.0.1,ローカル疎通確認 #Local #確認,3000
+192.168.1.1,192.168.1.100,56,500,1000,15,500,192.168.1.1,拠点ルータ #GW,
+example.com,,,500,1000,20,500,10.0.0.1>* >-,Webサービス #Cloud,5000</code></pre>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>列名</th>
+              <th>必須</th>
+              <th>設定範囲 / 既定値</th>
+              <th>説明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ip</code></td>
+              <td>○</td>
+              <td>IPv4アドレス または FQDN</td>
+              <td>テスト対象。FQDNは自動でIPv4へ名前解決されます。</td>
+            </tr>
+            <tr>
+              <td><code>source_ip</code></td>
+              <td>-</td>
+              <td>IPv4アドレス（空欄可）</td>
+              <td>パケットの送信元IP。空欄時はOSのルーティングテーブルに基づき自動選択。</td>
+            </tr>
+            <tr>
+              <td><code>ping_payload_bytes</code></td>
+              <td>-</td>
+              <td>1〜65500（既定: 56）</td>
+              <td>Pingパケットのペイロードサイズ (bytes)。</td>
+            </tr>
+            <tr>
+              <td><code>ping_timeout_ms</code></td>
+              <td>-</td>
+              <td>100〜5000（既定: 500）</td>
+              <td>Ping応答待ちタイムアウト (ms)。</td>
+            </tr>
+            <tr>
+              <td><code>ping_interval_ms</code></td>
+              <td>-</td>
+              <td>500〜300000（既定: 500）</td>
+              <td>Ping送信間隔 (ms)。</td>
+            </tr>
+            <tr>
+              <td><code>max_hops</code></td>
+              <td>-</td>
+              <td>1〜255（既定: 30）</td>
+              <td>Tracerouteの最大TTLホップ数。</td>
+            </tr>
+            <tr>
+              <td><code>trace_timeout_ms</code></td>
+              <td>-</td>
+              <td>100〜5000（既定: 500）</td>
+              <td>各ホップでの応答待ちタイムアウト (ms)。</td>
+            </tr>
+            <tr>
+              <td><code>expected_route</code></td>
+              <td>-</td>
+              <td>ホップを <code>&gt;</code> で区切る</td>
+              <td>期待する経路。ワイルドカード <code>*</code> や <code>-</code> を利用可能。</td>
+            </tr>
+            <tr>
+              <td><code>memo</code></td>
+              <td>-</td>
+              <td>任意のテキスト</td>
+              <td><code>#Core</code> や <code>#Branch</code> などのハッシュタグを含めると画面上で絞り込み可能。</td>
+            </tr>
+            <tr>
+              <td><code>auto_trace</code></td>
+              <td>-</td>
+              <td>1000〜300000（空欄可）</td>
+              <td>Ping連続失敗時にTracerouteを自動実行するまでの時間(ms)。1000ms単位で指定。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-title">CSV互換性について</div>
+        <p>
+          ・<code>auto_trace</code> 列のない従来の9列CSVもそのままインポート可能です（自動実行は無効として扱われます）。<br>
+          ・旧バージョンの <code>group</code> 列が含まれるCSVを読み込んだ場合、自動的にメモ末尾のハッシュタグ（例: <code>#Group名</code>）へ変換されます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. IPリスト (ホストカタログ) -->
+    <section id="hosts-catalog">
+      <h2>4. IPリスト (ホストカタログ)</h2>
+      <p>
+        ネットワーク内のIPアドレスと機器名・役割（説明）をマッピングした <code>hosts.csv</code> を管理できます。
+      </p>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>形式例</th>
+              <th>機能・効果</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <pre style="margin:0;"><code>ip,description
+192.168.1.1,コアルーター
+10.0.0.1,社内DNSサーバー</code></pre>
+              </td>
+              <td>
+                Tracerouteのホップ結果や実行結果の宛先表示において、該当するIPアドレスにマウスカーソルを重ねると機器名称（ツールチップ）が表示されます。経路調査の視認性が大幅に向上します。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>「IPリスト管理」モーダルから直接行の追加・編集・CSV取込・出力が可能です。</p>
+    </section>
+
+    <!-- 5. Ping監視・通信断計測 -->
+    <section id="ping-monitoring">
+      <h2>5. Ping監視・通信断計測</h2>
+      <p>
+        「Ping / 実行」を押すと、各シナリオの <code>ping_interval_ms</code> に従ってリアルタイムにテストが開始されます。
+      </p>
+
+      <h3>個別実行と一括実行</h3>
+      <ul>
+        <li><strong>未選択時</strong>: 一覧にあるすべてのシナリオを同時に実行します。</li>
+        <li><strong>チェックボックス選択時</strong>: チェックを付けた特定のシナリオのみを対象に実行・停止できます。</li>
+      </ul>
+
+      <h3>高精度な通信断（Downtime）判定</h3>
+      <ul>
+        <li>通信断時間は <strong>500ms単位</strong> で判定され、<code>00:00:01.500</code> のようにミリ秒まで正確に表示・記録されます。</li>
+        <li><strong>TTL超過の検出</strong>: ルーティングループ等によるTTL expiredパケットを通常タイムアウトと明確に区別し、「TTL超過」として検知・集計します。</li>
+      </ul>
+
+      <div class="ui-card">
+        <div class="ui-card-title">Pingメトリクス集計表示</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="badge badge-neutral">Ping実行中: N件</span>
+          <span class="badge badge-neutral">Ping(最新): 送信 X件 / 異常 Y件</span>
+          <span class="badge badge-err">通信断(最新): リアルタイム発生件数</span>
+          <span class="badge badge-err">通信断(履歴): 過去に断があった件数</span>
+          <span class="badge badge-warn">平均RTT / ロス率</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Traceroute・経路履歴比較 -->
+    <section id="traceroute-history">
+      <h2>6. Traceroute・経路履歴比較</h2>
+      <p>
+        Tracerouteを実行すると、宛先までのホップごとの応答アドレスおよびRTTを計測し、期待ルートとの比較を行います。
+      </p>
+
+      <h3>期待ルート (ExpectedRoute) のマッチング記法</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>記号 / 表記</th>
+              <th>例</th>
+              <th>マッチング判定仕様</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>IP / FQDN</code></td>
+              <td><code>192.168.1.1</code></td>
+              <td>そのホップの応答IPが完全一致する場合のみOK。</td>
+            </tr>
+            <tr>
+              <td><code>*</code> (アスタリスク)</td>
+              <td><code>10.0.0.1 > * > 10.0.0.3</code></td>
+              <td>中継ルーターが無応答（タイムアウト）になることが必須のホップ。応答があった場合は不一致。</td>
+            </tr>
+            <tr>
+              <td><code>-</code> (ハイフン)</td>
+              <td><code>10.0.0.1 > - > 10.0.0.3</code></td>
+              <td>ワイルドカード（無視）。タイムアウトでも任意のIP応答でも一致と判定。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3段履歴比較（Traceroute詳細モーダル）</h3>
+      <p>結果行をクリックして開く詳細画面では、直近最大1,000回分のTraceroute履歴を閲覧・比較できます。</p>
+      <div class="ui-card">
+        <div class="ui-card-title">比較テーブル構造</div>
+        <ul>
+          <li><strong>1段目 (期待値)</strong>: 設定された ExpectedRoute のホップ一覧。</li>
+          <li><strong>2段目 (前回)</strong>: 選択した実行結果の直前1回分の計測ホップ。</li>
+          <li><strong>3段目 (選択時刻)</strong>: 選択中の実行結果。変化したホップは<strong>淡い黄色（#fff8e9）</strong>で強調され、「変更」「追加」「削除」「応答変化」が表示されます。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7. 自動Traceroute機能 -->
+    <section id="auto-trace">
+      <h2>7. 自動Traceroute機能</h2>
+      <p>
+        シナリオの <code>auto_trace</code> にミリ秒（例: <code>3000</code> = 3秒）を設定しておくと、Ping監視中に障害が発生した瞬間の経路情報を自動追跡できます。
+      </p>
+      <div class="callout">
+        <div class="callout-title">動作ルール</div>
+        <ul>
+          <li>Pingの連続失敗時間が <code>auto_trace</code> で指定した時間に達すると、<strong>自動的にTracerouteを1回トリガー</strong>します。</li>
+          <li><strong>多重実行防止</strong>: 同じ通信断が継続している間は1度だけ実行され、無駄な連続Tracerouteによる負荷を防ぎます。</li>
+          <li>Pingが正常に復帰するか、テストを停止した時点でトリガー状態がリセットされ、次回障害時に再び自動実行可能になります。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8. 結果エクスポートとDB管理 -->
+    <section id="export-data">
+      <h2>8. 結果エクスポートとDB管理</h2>
+
+      <h3>CSV / ZIP 出力</h3>
+      <ul>
+        <li><strong>CSV出力</strong>: 各シナリオの最新Pingステータス、RTT、ロス率、最新/累積通信断時間、Traceroute最新結果を1行ずつサマリ出力します。</li>
+        <li><strong>ZIP出力</strong>: サマリCSVに加え、バックグラウンドのSQLiteからストリーミング生成されたPing/Tracerouteの全生明細CSV（時系列ログ）をパッケージして出力します。</li>
+      </ul>
+
+      <h3>データクリーンアップ</h3>
+      <ul>
+        <li>生明細の保持期間は<strong>24時間</strong>です（10分ごとに古いデータを自動削除）。</li>
+        <li>画面側の生明細・通信断履歴は各対象の直近<strong>1,000件</strong>までメモリ上に保持されます。</li>
+        <li>アプリ正常終了時に一時SQLiteファイルは自動削除され、個人情報やセッション情報を安全に破棄します。</li>
+      </ul>
+    </section>
+
+    <!-- 9. タスクバー常駐・終了制御 -->
+    <section id="taskbar-residency">
+      <h2>9. タスクバー常駐・終了制御</h2>
+      <p>
+        テスト実施中に誤ってウィンドウを閉じてしまうトラブルを防ぐため、Windows環境では終了制御ダイアログが作動します。
+      </p>
+      <ul>
+        <li><strong>タスクバーに常駐する</strong>: ウィンドウのみを非表示にし、通知領域（システムトレイ）にアイコンを残して監視テストを継続します。アイコンのダブルクリックまたは右クリックメニュー「ウィンドウを表示」で即座に再表示できます。</li>
+        <li><strong>完全に終了する</strong>: 実行中のテストを安全に停止し、セッションデータをクリアしてアプリケーションを終了します。</li>
+      </ul>
+    </section>
+
+    <!-- 10. 制限事項・仕様詳細 -->
+    <section id="limits-troubleshooting">
+      <h2>10. 制限事項・仕様詳細</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>内容・制限値</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>対応OS</td>
+              <td>Windows 11 のみ対応</td>
+            </tr>
+            <tr>
+              <td>対応プロトコル</td>
+              <td>IPv4 のみ対応（IPv6 は今後の対応予定）</td>
+            </tr>
+            <tr>
+              <td>シナリオ登録上限</td>
+              <td>無料版 / β版: 最大 50 行（上限到達時は行追加ボタンが無効化されます）</td>
+            </tr>
+            <tr>
+              <td>履歴保持</td>
+              <td>Traceroute / 通信断履歴: 各シナリオ直近 1,000 件（アプリ終了時に消去）</td>
+            </tr>
+            <tr>
+              <td>ライセンス期間</td>
+              <td>β版は 2027年1月31日まで 利用可能（起動時および画面右下に表示）</td>
+            </tr>
+            <tr>
+              <td>権限要件</td>
+              <td>ICMPパケット送受信のため、必要に応じて管理者権限または適切なネットワーク権限が必要です。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      <div>ConnTest Probe Manual &copy; 2026</div>
+      <div>Branch: <code>prepare</code> / <code>html-manual</code></div>
+    </footer>
+  </main>
+
+  <script>
+    // ナビゲーションリンクのアクティブ追従
+    const links = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 60;
+        if (window.pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
